@@ -1,0 +1,46 @@
+---
+title: "Basic Data Analysis"
+format: html
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r setup}
+#| include: false
+library(tidyverse)
+library(ggplot2)
+```
+
+## Basic Data Analysis
+
+Let's create a simple dataset and visualize it.
+
+```{r}
+# Create a sample dataset
+set.seed(123)
+data <- data.frame(
+  x = 1:100,
+  y = rnorm(100, mean = 0, sd = 1)
+)
+
+# Create a scatter plot
+ggplot(data, aes(x = x, y = y)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Random Data with Trend Line",
+       x = "Index",
+       y = "Value") +
+  theme_minimal()
+```
+
+## Summary Statistics
+
+Here are some basic summary statistics of our data:
+
+```{r}
+summary(data$y)
+```
+
+The mean of y is `r mean(data$y)` and the standard deviation is `r sd(data$y)`.
