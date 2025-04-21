@@ -2,10 +2,38 @@
 title: "Basic Data Analysis"
 format: html
 execute:
-  echo: true
+  echo: false
   warning: false
   message: false
 ---
+
+## Basic Data Analysis
+
+This report presents the results of our basic data analysis. The analysis was performed using R, and the code can be found in the `scripts` directory.
+
+### Data Visualization
+
+Here is a visualization of our random dataset:
+
+```{r}
+#| label: fig-plot
+#| fig-cap: "Random Data with Trend Line"
+#| fig-alt: "Scatter plot showing random data points with a trend line"
+knitr::include_graphics("output/random_plot.png")
+```
+
+### Summary Statistics
+
+Here are the summary statistics of our data:
+
+```{r}
+#| label: tbl-summary
+#| tbl-cap: "Summary Statistics"
+summary_stats <- read.csv("output/summary_stats.csv")
+knitr::kable(summary_stats, format = "html")
+```
+
+The mean of y is `r read.csv("output/mean_sd.csv")$mean` and the standard deviation is `r read.csv("output/mean_sd.csv")$sd`.
 
 ```{r setup}
 #| include: false
