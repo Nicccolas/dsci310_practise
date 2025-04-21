@@ -1,46 +1,25 @@
-name: Render Quarto Document
-
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
+  push:
+    branches: main
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+name: Quarto Publish
 
 jobs:
-  render:
+  build-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - name: Setup Quarto
+      - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
-        with:
-          version: '1.4'
 
-      - name: Render Quarto Document
-        uses: quarto-dev/quarto-actions/render@v2
+      - name: Render and Publish
+        uses: quarto-dev/quarto-actions/publish@v2
         with:
-          render: analysis.qmd
-          output-dir: docs
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: render
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4 
+          target: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
